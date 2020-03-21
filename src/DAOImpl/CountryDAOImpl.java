@@ -44,7 +44,36 @@ public class CountryDAOImpl implements CountryDAO {
 	    	
 		      e.printStackTrace();
 		    }
+		  //closing connection, statement and resultSet
+	    finally {
+	    	
+	      try {
+	    	  
+	          if( conn != null ){
+	        	  
+		          conn.close(); 
+		        }
+		     
+	          if( stmt != null ) {
+	        	  
+		          stmt.close();
+		        }
+	          
+		      if( res != null ) {
+		    	  
+		          res.close();
+		        }
+	 
+	      }
+	      
+	      //catch
+	      catch( Exception exe ){
+	    	  
+	        exe.printStackTrace();
+	        
+	      }
 
+	    }
 	    
 		return countryList; //returning the list
 	}
@@ -59,7 +88,11 @@ public class CountryDAOImpl implements CountryDAO {
 		    // print all Data
 		    for( Country country : countryDAO.ListAllCountry())
 		    {
-		      System.out.println (country.getCode());
+		      System.out.println (country.getCode() +
+						  			","+" " + country.getName() + 
+						  			","+" " + country.getContinent() + 
+						  			","+" " + country.getSurfaceArea() + 
+						  			","+" " + country.getHeadOfState());
 		    }
 	}
 
