@@ -1,3 +1,5 @@
+package DataAccessObjectPattern;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -5,13 +7,15 @@ import java.sql.DriverManager;
 
 public class DatabaseConnection
 {
-  static Connection conn;
+  Connection conn;
 
-  public static void main (String [] args) {
+  public DatabaseConnection()
+  {
 	  MySQLConnection();
   }
+
 	//MySQL connection	
-	public static Connection MySQLConnection(){
+	public Connection MySQLConnection(){
 		// create a mysql database connection
 	    try{
 	    	Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,7 +25,7 @@ public class DatabaseConnection
 		      System.err.println(e.getMessage());
 		      System.out.println("not success");
 		}
-	   System.out.println("Success");
+	   
 		return conn; //returnstatement
 	 }//end method MySQLConnection
 }
