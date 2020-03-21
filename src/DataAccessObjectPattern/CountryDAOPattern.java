@@ -1,6 +1,8 @@
 package DataAccessObjectPattern;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,6 +30,7 @@ public class CountryDAOPattern {
 	private JTextField SurfaceArea;
 	private JTextField HeadOfState;
 
+	CountryDAO countryDAO = new CountryDAOImpl();
 	/*
 	// Main method
 	public static void main(String[] args) {
@@ -140,21 +143,15 @@ public class CountryDAOPattern {
 		// add JButtons to the JFrame
 		frame.add(btnRetrieveAllRecords);
 		frame.add(btnAdd);
-
-		// get selected row data From table to textFields
-		table.addMouseListener(new MouseAdapter() { // mouse listener
-
+		
+		btnRetrieveAllRecords.addActionListener(new ActionListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				// i = the index of the selected row
-				Integer i = table.getSelectedRow();
-				Code.setText(DTmodel.getValueAt(i, 0).toString());
-				Name.setText(DTmodel.getValueAt(i, 1).toString());
-				Continent.setText(DTmodel.getValueAt(i, 2).toString());
-				SurfaceArea.setText(DTmodel.getValueAt(i, 3).toString());
-				HeadOfState.setText(DTmodel.getValueAt(i, 4).toString());
-
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				PopulateData();
+				
 			}
 		});
 
@@ -163,6 +160,21 @@ public class CountryDAOPattern {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// exit on close
 		frame.setVisible(true);
 
+	}
+	
+	//Populate data from database
+	public void PopulateData() {
+		
+				for (Country country : countryDAO.ListAllCountry()) {
+					
+				String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+				
+				//adding data to table
+                String[] data = {country.getCode(), country.getName(), country.getContinent(), surfaceArea,
+                					country.getHeadOfState() };
+                ((DefaultTableModel) table.getModel()).addRow(data);
+		
+	}
 	}
 
 }
