@@ -31,22 +31,7 @@ public class CountryDAOPattern {
 	private JTextField HeadOfState;
 
 	CountryDAO countryDAO = new CountryDAOImpl();
-	/*
-	// Main method
-	public static void main(String[] args) {
 
-		CountryDAO countryDAO = new CountryDAOImpl();
-
-		
-		System.out.println();
-
-		// print all Employees
-		for (Country country : countryDAO.ListAllCountry()) {
-			System.out.println(country.getCode() + "," + " " + country.getName() + "," + " " + country.getContinent()
-					+ "," + " " + country.getSurfaceArea() + "," + " " + country.getHeadOfState());
-		}
-	}
-*/
 	public CountryDAOPattern() {
 		
 		CountryTable();
@@ -95,10 +80,13 @@ public class CountryDAOPattern {
 		JLabel LHeadOfState = new JLabel("Head Of State");
 
 		// create JButtons
-
-		JButton btnAdd = new JButton("Add");
+		JButton btnSaveNewCountry = new JButton("Save a new country in the database");
 		JButton btnRetrieveAllRecords = new JButton("Retrieve all records");
-
+		JButton btnListAllCountries = new JButton("List all countries in the database");
+		JButton btnFindCountryByCountryCode = new JButton ("Find a country by country code");
+		JButton btnFindCountryByName = new JButton("Find a country by name");
+		
+ 
 		// Specifying where each text field to be
 		Code.setBounds(250, 500, 150, 50);
 		Name.setBounds(410, 500, 200, 50);
@@ -115,8 +103,10 @@ public class CountryDAOPattern {
 
 		// Specifying where each button to be
 		btnRetrieveAllRecords.setBounds(20, 20, 210, 50);
-		btnAdd.setBounds(20, 500, 210, 50);
-
+		btnListAllCountries.setBounds(20, 80, 210, 50);
+		btnFindCountryByCountryCode.setBounds(20, 140, 210, 50);
+		btnFindCountryByName.setBounds(20, 200, 210, 50);
+		btnSaveNewCountry.setBounds(20, 500, 210, 50);
 		// create JScrollPane
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(250, 20, 980, 440);
@@ -142,7 +132,11 @@ public class CountryDAOPattern {
 
 		// add JButtons to the JFrame
 		frame.add(btnRetrieveAllRecords);
-		frame.add(btnAdd);
+		frame.add(btnListAllCountries);
+		frame.add(btnFindCountryByCountryCode);
+		frame.add(btnFindCountryByName);
+		frame.add(btnSaveNewCountry);
+		
 		
 		btnRetrieveAllRecords.addActionListener(new ActionListener() {
 			
