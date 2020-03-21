@@ -26,6 +26,6 @@ public class DatabaseConnection
 		      System.out.println("not success");
 		}
 	   
-		return conn; //returnstatement
+		return conn; //return
 	 }//end method MySQLConnection
 }

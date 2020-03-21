@@ -21,22 +21,22 @@ public class CountryDAOImpl implements CountryDAO {
 		DatabaseConnection databaseCo = new DatabaseConnection();
 	    Connection conn = databaseCo.MySQLConnection();
 	    Statement stmt = null;
-	    ResultSet res = null;
+	    ResultSet reslt = null;
 	    List<Country> countryList = new ArrayList<Country>();
 	    try
 	    {
 	    	
 	    	String query = "SELECT * FROM country"; // selecting from country table
 	 	    stmt = conn.createStatement(); // creating the statement
-	 	    res = stmt.executeQuery(query);// executing Query
-	 	   while( res.next()) {
+	 	    reslt = stmt.executeQuery(query);// executing Query
+	 	   while( reslt.next()) {
 	 		   
 	 		   Country country = new Country(); //country object
-		       country.setCode(res.getString("Code"));
-		       country.setName(res.getString("Name"));
-		       country.setContinent(res.getString("Continent"));
-		       country.setSurfaceArea(res.getFloat("SurfaceArea"));
-		       country.setHeadOfState(res.getString("HeadOfState"));
+		       country.setCode(reslt.getString("Code"));
+		       country.setName(reslt.getString("Name"));
+		       country.setContinent(reslt.getString("Continent"));
+		       country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
+		       country.setHeadOfState(reslt.getString("HeadOfState"));
 		       countryList.add(country); // adding to the list
 	 	   }
 	    	
@@ -59,9 +59,9 @@ public class CountryDAOImpl implements CountryDAO {
 		          stmt.close();
 		        }
 	          
-		      if( res != null ) {
+		      if( reslt != null ) {
 		    	  
-		          res.close();
+		          reslt.close();
 		        }
 	 
 	      }
@@ -76,24 +76,6 @@ public class CountryDAOImpl implements CountryDAO {
 	    }
 	    
 		return countryList; //returning the list
-	}
-	
-	public static void main( String[] args ){
-		
-		  CountryDAO countryDAO = new CountryDAOImpl ();
-
-			
-		    System.out.println();
-		    
-		    // print all Data
-		    for( Country country : countryDAO.ListAllCountry())
-		    {
-		      System.out.println (country.getCode() +
-						  			","+" " + country.getName() + 
-						  			","+" " + country.getContinent() + 
-						  			","+" " + country.getSurfaceArea() + 
-						  			","+" " + country.getHeadOfState());
-		    }
 	}
 
 }
