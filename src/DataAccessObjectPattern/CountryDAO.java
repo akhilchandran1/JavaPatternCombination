@@ -12,5 +12,7 @@ public interface CountryDAO {
 	
 	public List<Country> ListAllCountry();
 	
+	public void addCountry( Country country );
+	
 }
 

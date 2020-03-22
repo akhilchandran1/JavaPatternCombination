@@ -3,10 +3,9 @@ package DataAccessObjectPattern;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -18,7 +17,6 @@ import javax.swing.table.TableRowSorter;
 import DAOImpl.CountryDAOImpl;
 import DataTransferObjectPattern.Country;
 
-
 public class CountryDAOPattern {
 
 	private JTable table; // table
@@ -26,16 +24,17 @@ public class CountryDAOPattern {
 	public JFrame frame; // frame
 	private JTextField Code;
 	private JTextField Name;
-	private JTextField Continent;
+	private JComboBox<?> Continent;
 	private JTextField SurfaceArea;
 	private JTextField HeadOfState;
 
 	CountryDAO countryDAO = new CountryDAOImpl();
 
 	public CountryDAOPattern() {
-		
+
 		CountryTable();
 	}
+
 	public void CountryTable() {
 
 		// create JFrame and JTable
@@ -68,9 +67,12 @@ public class CountryDAOPattern {
 		// create JTextFields
 		Code = new JTextField();
 		Name = new JTextField();
-		Continent = new JTextField();
 		SurfaceArea = new JTextField();
 		HeadOfState = new JTextField();
+		
+		//create JComboBox
+		String options[] = {"Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America"};
+		Continent = new JComboBox<Object>(options);
 
 		// Create JLabel
 		JLabel LCode = new JLabel("Code");
@@ -83,10 +85,9 @@ public class CountryDAOPattern {
 		JButton btnSaveNewCountry = new JButton("Save a new country in the database");
 		JButton btnRetrieveAllRecords = new JButton("Retrieve all records");
 		JButton btnListAllCountries = new JButton("List all countries in the database");
-		JButton btnFindCountryByCountryCode = new JButton ("Find a country by country code");
+		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
 		JButton btnFindCountryByName = new JButton("Find a country by name");
-		
- 
+
 		// Specifying where each text field to be
 		Code.setBounds(250, 500, 150, 50);
 		Name.setBounds(410, 500, 200, 50);
@@ -122,7 +123,6 @@ public class CountryDAOPattern {
 		frame.add(SurfaceArea);
 		frame.add(HeadOfState);
 
-
 		// add JLabels to the JFrame
 		frame.add(LCode);
 		frame.add(LName);
@@ -137,15 +137,25 @@ public class CountryDAOPattern {
 		frame.add(btnFindCountryByName);
 		frame.add(btnSaveNewCountry);
 		
-		
+		// adding actionListoner to button 
 		btnRetrieveAllRecords.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				PopulateData(); // calling method
+
+			}
+		});
+		
+		btnSaveNewCountry.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				PopulateData();
-				
+				addCountry();
 			}
 		});
 
@@ -155,20 +165,35 @@ public class CountryDAOPattern {
 		frame.setVisible(true);
 
 	}
-	
-	//Populate data from database
+
+	// Populate data from database
 	public void PopulateData() {
-		
-				for (Country country : countryDAO.ListAllCountry()) {
-					
-				String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
-				
-				//adding data to table
-                String[] data = {country.getCode(), country.getName(), country.getContinent(), surfaceArea,
-                					country.getHeadOfState() };
-                ((DefaultTableModel) table.getModel()).addRow(data);
-		
+
+		for (Country country : countryDAO.ListAllCountry()) {
+
+			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+
+			// adding data to table
+			String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
+					country.getHeadOfState() };
+			((DefaultTableModel) table.getModel()).addRow(data);
+
+		}
 	}
+	
+	public void addCountry() {
+		
+		float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting String to float
+		
+		Country NewCountry = new Country();
+		NewCountry.setCode (Code.getText());
+		NewCountry.setName (Name.getText());
+		NewCountry.setContinent(Continent.getSelectedItem().toString());
+		NewCountry.setSurfaceArea(fSurfaceArea);
+		NewCountry.setHeadOfState(HeadOfState.getText());
+		
+		countryDAO.addCountry(NewCountry);
+		
 	}
 
 }
