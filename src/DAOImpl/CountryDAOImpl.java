@@ -47,36 +47,6 @@ public class CountryDAOImpl implements CountryDAO {
 
 			e.printStackTrace();
 		}
-		// closing connection, statement and resultSet
-		finally {
-
-			try {
-
-				if (conn != null) {
-
-					conn.close();
-				}
-
-				if (stmt != null) {
-
-					stmt.close();
-				}
-
-				if (reslt != null) {
-
-					reslt.close();
-				}
-
-			}
-
-			// catch
-			catch (Exception exe) {
-
-				exe.printStackTrace();
-
-			}
-
-		}
 
 		return countryList; // returning the list
 	} // end ListAllCountry
@@ -103,32 +73,6 @@ public class CountryDAOImpl implements CountryDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-
-		}
-
-		// closing connection, statement
-
-		finally {
-
-			if (Stmt != null) {
-				try {
-					Stmt.close(); // stmt closing
-
-					// catch
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (Conn != null) {
-				try {
-					Conn.close(); // conn closing
-
-					// catch
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 
 		}
 
@@ -170,24 +114,6 @@ public class CountryDAOImpl implements CountryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// closing connection, statement and resultSet
-		finally {
-			try {
-				if (Conn != null) {
-					Conn.close();// Conn close
-				}
-				if (stmt != null) {
-					stmt.close();// stmt close
-				}
-				if (reslt != null) {
-					reslt.close(); // reslt close
-				}
-				// catch
-			} catch (Exception exe) {
-				exe.printStackTrace();
-			}
-
-		}
 		return null;
 	}// end FindCountryByCode
 
@@ -227,24 +153,7 @@ public class CountryDAOImpl implements CountryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// closing connection, statement and resultSet
-		finally {
-			try {
-				if (Conn != null) {
-					Conn.close();// Conn close
-				}
-				if (stmt != null) {
-					stmt.close();// stmt close
-				}
-				if (reslt != null) {
-					reslt.close(); // reslt close
-				}
-				// catch
-			} catch (Exception exe) {
-				exe.printStackTrace();
-			}
 
-		}
 		return null;
 	}// end FindCountryByCode
 
