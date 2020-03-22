@@ -13,5 +13,7 @@ public interface CountryDAO {
 	public void addCountry(Country country);
 
 	public Country FindCountryByCode(String countryCode);
+	
+	public Country FindCountryByName(String countryName);
 
 }

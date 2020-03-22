@@ -76,7 +76,6 @@ public class CountryDAOPattern {
 		HeadOfState = new JTextField();
 		FindByCode = new JTextField();
 		FindByName = new JTextField();
-		
 
 		// create JComboBox
 		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America" };
@@ -96,13 +95,13 @@ public class CountryDAOPattern {
 		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
 		JButton btnFindCountryByName = new JButton("Find a country by name");
 
-		btnSaveNewCountry .setBackground(Color.RED);// add color in button
-		
+		btnSaveNewCountry.setBackground(Color.RED);// add color in button
+
 		/*
-		//giving border color for textField
-		FindByCode.setBorder(new LineBorder(Color.green,1));
-		FindByName.setBorder(new LineBorder(Color.green,1));
-		*/
+		 * //giving border color for textField FindByCode.setBorder(new
+		 * LineBorder(Color.green,1)); FindByName.setBorder(new
+		 * LineBorder(Color.green,1));
+		 */
 
 		// Specifying where each text field to be
 		Code.setBounds(250, 500, 150, 50);
@@ -126,7 +125,7 @@ public class CountryDAOPattern {
 		btnFindCountryByCountryCode.setBounds(20, 220, 210, 50);
 		btnFindCountryByName.setBounds(20, 360, 210, 50);
 		btnSaveNewCountry.setBounds(20, 500, 210, 50);
-		
+
 		// create JScrollPane
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(250, 20, 980, 440);
@@ -180,25 +179,36 @@ public class CountryDAOPattern {
 
 			}
 		});
-		
+
 		btnFindCountryByCountryCode.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				FindCountryByCode(); //calling FindCountryByCode
-				
+
+				FindCountryByCode(); // calling FindCountryByCode
+
+			}
+		});
+
+		btnFindCountryByName.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				FindCountryByCountryName(); // calling FindCountryByCountryName
 			}
 		});
 		
-		btnFindCountryByName.addActionListener(new ActionListener() {
+		btnListAllCountries.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				FindCountryByCountryName(); // calling FindCountryByCountryName
+				ListAllCountries(); // calling ListAllCountries
+				
 			}
 		});
 
@@ -212,6 +222,7 @@ public class CountryDAOPattern {
 	// Populate data from database
 	public void PopulateData() {
 
+		RefreshTable(); // calling RefreshTable
 		// getting all the data from country table
 		for (Country country : countryDAO.ListAllCountry()) {
 
@@ -224,6 +235,25 @@ public class CountryDAOPattern {
 
 		}
 	}// end PopulateData
+	
+	// ListAllCountries
+	public void ListAllCountries() {
+		
+		RefreshTable(); // calling RefreshTable
+		
+		// getting all the data from country table
+		for (Country country : countryDAO.ListAllCountry()) {
+
+			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+
+			// adding data to table
+			String[] data = { "", country.getName(), "", "", ""};
+			((DefaultTableModel) table.getModel()).addRow(data);
+
+		}
+		
+		
+	}// ListAllCountries
 
 	// add new country
 	public void addCountry() {
@@ -241,6 +271,7 @@ public class CountryDAOPattern {
 		countryDAO.addCountry(NewCountry); // countryDAOImpl method
 
 		Refresh(); // calling refresh
+		RefreshTable();
 
 		// show message dialog
 		JOptionPane.showMessageDialog(null, "New Country Successfully Added");
@@ -301,28 +332,44 @@ public class CountryDAOPattern {
 		HeadOfState.setText("");
 
 	} // refresh
-	
+
+	// Refresh JTable
+	public void RefreshTable() {
+
+		DefaultTableModel Tablemodel = (DefaultTableModel) table.getModel();
+		while (Tablemodel.getRowCount() > 0) {
+			Tablemodel.setRowCount(0);
+		}
+	} // end Refresh JTable
+
 	// FindCountryByCode
 	public void FindCountryByCode() {
-		
-		
-	   Country country = countryDAO.FindCountryByCode(FindByCode.getText());
-	   String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
-	   
-	// adding data to table
-				String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
-						country.getHeadOfState() };
-				((DefaultTableModel) table.getModel()).addRow(data);
-	   
 
-		
+		RefreshTable();
+
+		Country country = countryDAO.FindCountryByCode(FindByCode.getText());
+		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+
+		// adding data to table
+		String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
+				country.getHeadOfState() };
+		((DefaultTableModel) table.getModel()).addRow(data);
+
 	}// end FindCountryByCode
-	
+
 	// FindCountryByCountryName
 	public void FindCountryByCountryName() {
 		
-		
-		
+		RefreshTable(); // calling RefreshTable
+
+		Country country = countryDAO.FindCountryByName(FindByName.getText());
+		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+
+		// adding data to table
+		String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
+				country.getHeadOfState() };
+		((DefaultTableModel) table.getModel()).addRow(data);
+
 	}// end FindCountryByCountryName
 
 }

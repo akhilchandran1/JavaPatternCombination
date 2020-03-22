@@ -191,4 +191,61 @@ public class CountryDAOImpl implements CountryDAO {
 		return null;
 	}// end FindCountryByCode
 
+	@Override
+	public Country FindCountryByName(String countryName) { // passing Country Name
+
+		// getting the connection
+		DatabaseConnection databaseCo = new DatabaseConnection();
+		Connection Conn = databaseCo.MySQLConnection();
+		Statement stmt = null;
+		ResultSet reslt = null;
+
+		try {
+
+			// executing Query
+			String query = "SELECT * FROM country where Name='" + countryName + "'"; // select from country table by
+																						// Name (user input)
+			stmt = Conn.createStatement();
+			reslt = stmt.executeQuery(query);
+			if (reslt.next()) {
+				Country country = new Country(); // country object
+				country.setCode(reslt.getString("Code"));
+				country.setName(reslt.getString("Name"));
+				country.setContinent(reslt.getString("Continent"));
+				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
+				country.setHeadOfState(reslt.getString("HeadOfState"));
+
+				return country; // returning back
+
+			} else {
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "No Country in this Name");
+
+			}
+
+			// catch
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// closing connection, statement and resultSet
+		finally {
+			try {
+				if (Conn != null) {
+					Conn.close();// Conn close
+				}
+				if (stmt != null) {
+					stmt.close();// stmt close
+				}
+				if (reslt != null) {
+					reslt.close(); // reslt close
+				}
+				// catch
+			} catch (Exception exe) {
+				exe.printStackTrace();
+			}
+
+		}
+		return null;
+	}// end FindCountryByCode
+
 }
