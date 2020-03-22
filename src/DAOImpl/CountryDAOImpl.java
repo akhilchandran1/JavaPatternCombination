@@ -24,10 +24,11 @@ public class CountryDAOImpl implements CountryDAO {
 		ResultSet reslt = null;
 		List<Country> countryList = new ArrayList<Country>();
 		try {
-
+			
+			// executing Query
 			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
-			reslt = stmt.executeQuery(query);// executing Query
+			reslt = stmt.executeQuery(query);
 			while (reslt.next()) {
 
 				Country country = new Country(); // country object
@@ -75,93 +76,41 @@ public class CountryDAOImpl implements CountryDAO {
 		}
 
 		return countryList; // returning the list
-	}
+	} //end ListAllCountry
 	
 	
-	public void addCountry(Country country) {
-		 Connection Conn = null;
-		    Statement Stmt = null;
-
-		    String query = "INSERT INTO country" +" VALUES(" + "'"+country.getCode() +"'"+","+ "'"+country.getName() +"'"+","+ "'"+country.getContinent()
-			+"'"+","+ country.getSurfaceArea() +","+ "'"+country.getHeadOfState()+"'" + ")";
-
-		    try
-		    {
-		    DatabaseConnection databaseCo = new DatabaseConnection();
-		      Conn = databaseCo.MySQLConnection();
-		      Stmt = Conn.prepareStatement(query);
-		      
-		    
-		      Stmt.executeUpdate(query);
-
-		    }
-		    catch( SQLException e )
-		    {
-
-		      e.printStackTrace();
-
-		    }
-		    
-		    finally
-		    {
-
-		      if( Stmt != null )
-		      {
-		        try
-		        {
-		          Stmt.close();
-		        }
-		        catch( SQLException e )
-		        {
-		          e.printStackTrace();
-		        }
-		      }
-
-		      if( Conn != null )
-		      {
-		        try
-		        {
-		          Conn.close();
-		        }
-		        catch( SQLException e )
-		        {
-		          e.printStackTrace();
-		        }
-		      }
-		      
-
-		    }
-
-	}
-	
-	/*
-
 	@Override
-	public void addCountry(Country country) {
+	public void addCountry(Country country) { // passing the country object
 		Connection Conn = null;
-		Statement stmt = null;
-		
-		String query = "insert into country (Code, Name, Continent, SurfaceArea, HeadOfState)" 
-		+ "values(" + country.getCode() +","+ country.getName() +","+ country.getContinent()
-		+","+ country.getSurfaceArea() +","+ country.getHeadOfState() + ")";
+		Statement Stmt = null;
 
+		// getting values 
+		String query = "INSERT INTO country" + " VALUES(" + "'" + country.getCode() + "'" + "," + "'"
+				+ country.getName() + "'" + "," + "'" + country.getContinent() + "'" + "," + country.getSurfaceArea()
+				+ "," + "'" + country.getHeadOfState() + "'" + ")";
+		
+		// Insert query
 		try {
 			DatabaseConnection databaseCo = new DatabaseConnection();
 			Conn = databaseCo.MySQLConnection();
-			stmt = Conn.prepareStatement(query);
-			stmt.executeUpdate(query);
+			Stmt = Conn.prepareStatement(query);
 
-			System.out.println("successfully new country added");
-
+			Stmt.executeUpdate(query); //executing
+			
+			// catch
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 
-		} finally {
+		}
 
-			if (stmt != null) {
+		finally {
+
+			if (Stmt != null) {
 				try {
-					stmt.close();
+					Stmt.close(); //stmt closing
+					
+					//catch
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -169,7 +118,9 @@ public class CountryDAOImpl implements CountryDAO {
 
 			if (Conn != null) {
 				try {
-					Conn.close();
+					Conn.close(); //conn closing
+					
+					//catch
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -177,7 +128,6 @@ public class CountryDAOImpl implements CountryDAO {
 
 		}
 
-	}
-	*/
+	} //end addCountry
 
 }

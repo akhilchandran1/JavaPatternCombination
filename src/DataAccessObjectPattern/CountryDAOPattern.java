@@ -1,5 +1,6 @@
 package DataAccessObjectPattern;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -28,7 +30,7 @@ public class CountryDAOPattern {
 	private JTextField SurfaceArea;
 	private JTextField HeadOfState;
 
-	CountryDAO countryDAO = new CountryDAOImpl();
+	CountryDAO countryDAO = new CountryDAOImpl(); // calling method
 
 	public CountryDAOPattern() {
 
@@ -69,9 +71,9 @@ public class CountryDAOPattern {
 		Name = new JTextField();
 		SurfaceArea = new JTextField();
 		HeadOfState = new JTextField();
-		
-		//create JComboBox
-		String options[] = {"Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America"};
+
+		// create JComboBox
+		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America" };
 		Continent = new JComboBox<Object>(options);
 
 		// Create JLabel
@@ -87,6 +89,8 @@ public class CountryDAOPattern {
 		JButton btnListAllCountries = new JButton("List all countries in the database");
 		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
 		JButton btnFindCountryByName = new JButton("Find a country by name");
+
+		// btnSaveNewCountry .setBackground(Color.RED);// add color in button
 
 		// Specifying where each text field to be
 		Code.setBounds(250, 500, 150, 50);
@@ -136,26 +140,27 @@ public class CountryDAOPattern {
 		frame.add(btnFindCountryByCountryCode);
 		frame.add(btnFindCountryByName);
 		frame.add(btnSaveNewCountry);
-		
-		// adding actionListoner to button 
+
+		// adding actionListoner to button
 		btnRetrieveAllRecords.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
-				PopulateData(); // calling method
+				PopulateData(); // calling PopulateData
 
 			}
 		});
-		
+
 		btnSaveNewCountry.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				addCountry();
+
+				conditions();
+
 			}
 		});
 
@@ -164,11 +169,12 @@ public class CountryDAOPattern {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// exit on close
 		frame.setVisible(true);
 
-	}
+	} // end CountryTable
 
 	// Populate data from database
 	public void PopulateData() {
 
+		// getting all the data from country table
 		for (Country country : countryDAO.ListAllCountry()) {
 
 			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
@@ -179,21 +185,83 @@ public class CountryDAOPattern {
 			((DefaultTableModel) table.getModel()).addRow(data);
 
 		}
-	}
-	
+	}// end PopulateData
+
+	// add new country
 	public void addCountry() {
-		
+
 		float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting String to float
-		
+
+		// Adding new country
 		Country NewCountry = new Country();
-		NewCountry.setCode (Code.getText());
-		NewCountry.setName (Name.getText());
+		NewCountry.setCode(Code.getText());
+		NewCountry.setName(Name.getText());
 		NewCountry.setContinent(Continent.getSelectedItem().toString());
 		NewCountry.setSurfaceArea(fSurfaceArea);
 		NewCountry.setHeadOfState(HeadOfState.getText());
-		
-		countryDAO.addCountry(NewCountry);
-		
-	}
+
+		countryDAO.addCountry(NewCountry); // countryDAOImpl method
+
+		Refresh(); // calling refresh
+
+		// show message dialog
+		JOptionPane.showMessageDialog(null, "New Country Successfully Added");
+
+	}// end addCountry
+
+	// conditions
+	public void conditions() {
+
+		try {
+
+			// checking the length
+			if (Code.getText().length() > 3) {
+
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "code not allowed. Maximum length allowed is 3 ");
+
+				// if its empty will print
+			} else if (Code.getText().equals("")) {
+
+				// show message dialog
+				JOptionPane.showMessageDialog(null, " Please enter a Code ");
+
+				// if its empty will print
+			} else if (Name.getText().equals("")) {
+
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "Please enter the Country Name");
+
+				// if its empty will print
+			} else if (SurfaceArea.getText().equals("")) {
+
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "Please enter Surface Area");
+
+				// if its empty will print
+			} else if (HeadOfState.getText().equals("")) {
+
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "Please enter Head Of State");
+
+				// else call addCountry
+			} else {
+				addCountry(); // calling addCountry
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	} // end conditions
+
+	// refresh
+	public void Refresh() {
+
+		// clearing text field
+		Code.setText("");
+		Name.setText("");
+		SurfaceArea.setText("");
+		HeadOfState.setText("");
+
+	} // refresh
 
 }
