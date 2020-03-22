@@ -4,15 +4,14 @@ import java.util.List;
 
 import DataTransferObjectPattern.Country;
 
-
 public interface CountryDAO {
 
-	
-	// creating a list
-	
-	public List<Country> ListAllCountry();
-	
-	public void addCountry( Country country );
-	
-}
+	// methods to perform the operations
 
+	public List<Country> ListAllCountry();
+
+	public void addCountry(Country country);
+
+	public Country FindCountryByCode(String countryCode);
+
+}

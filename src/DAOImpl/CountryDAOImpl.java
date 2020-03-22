@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import DataAccessObjectPattern.CountryDAO;
 import DataAccessObjectPattern.DatabaseConnection;
 import DataTransferObjectPattern.Country;
@@ -24,11 +26,12 @@ public class CountryDAOImpl implements CountryDAO {
 		ResultSet reslt = null;
 		List<Country> countryList = new ArrayList<Country>();
 		try {
-			
+
 			// executing Query
 			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);
+
 			while (reslt.next()) {
 
 				Country country = new Country(); // country object
@@ -76,27 +79,26 @@ public class CountryDAOImpl implements CountryDAO {
 		}
 
 		return countryList; // returning the list
-	} //end ListAllCountry
-	
-	
+	} // end ListAllCountry
+
 	@Override
 	public void addCountry(Country country) { // passing the country object
 		Connection Conn = null;
 		Statement Stmt = null;
 
-		// getting values 
+		// getting values
 		String query = "INSERT INTO country" + " VALUES(" + "'" + country.getCode() + "'" + "," + "'"
 				+ country.getName() + "'" + "," + "'" + country.getContinent() + "'" + "," + country.getSurfaceArea()
 				+ "," + "'" + country.getHeadOfState() + "'" + ")";
-		
+
 		// Insert query
 		try {
 			DatabaseConnection databaseCo = new DatabaseConnection();
 			Conn = databaseCo.MySQLConnection();
 			Stmt = Conn.prepareStatement(query);
 
-			Stmt.executeUpdate(query); //executing
-			
+			Stmt.executeUpdate(query); // executing
+
 			// catch
 		} catch (SQLException e) {
 
@@ -104,13 +106,15 @@ public class CountryDAOImpl implements CountryDAO {
 
 		}
 
+		// closing connection, statement
+
 		finally {
 
 			if (Stmt != null) {
 				try {
-					Stmt.close(); //stmt closing
-					
-					//catch
+					Stmt.close(); // stmt closing
+
+					// catch
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -118,9 +122,9 @@ public class CountryDAOImpl implements CountryDAO {
 
 			if (Conn != null) {
 				try {
-					Conn.close(); //conn closing
-					
-					//catch
+					Conn.close(); // conn closing
+
+					// catch
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -128,6 +132,63 @@ public class CountryDAOImpl implements CountryDAO {
 
 		}
 
-	} //end addCountry
+	} // end addCountry
+
+	@Override
+	public Country FindCountryByCode(String countryCode) { // passing Country Code
+
+		// getting the connection
+		DatabaseConnection databaseCo = new DatabaseConnection();
+		Connection Conn = databaseCo.MySQLConnection();
+		Statement stmt = null;
+		ResultSet reslt = null;
+
+		try {
+
+			// executing Query
+			String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
+																						// code (user input)
+			stmt = Conn.createStatement();
+			reslt = stmt.executeQuery(query);
+			if (reslt.next()) {
+				Country country = new Country(); // country object
+				country.setCode(reslt.getString("Code"));
+				country.setName(reslt.getString("Name"));
+				country.setContinent(reslt.getString("Continent"));
+				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
+				country.setHeadOfState(reslt.getString("HeadOfState"));
+
+				return country; // returning back
+
+			} else {
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "No Country in this Code");
+
+			}
+
+			// catch
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// closing connection, statement and resultSet
+		finally {
+			try {
+				if (Conn != null) {
+					Conn.close();// Conn close
+				}
+				if (stmt != null) {
+					stmt.close();// stmt close
+				}
+				if (reslt != null) {
+					reslt.close(); // reslt close
+				}
+				// catch
+			} catch (Exception exe) {
+				exe.printStackTrace();
+			}
+
+		}
+		return null;
+	}// end FindCountryByCode
 
 }

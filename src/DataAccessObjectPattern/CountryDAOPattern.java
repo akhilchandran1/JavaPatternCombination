@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -29,6 +30,8 @@ public class CountryDAOPattern {
 	private JComboBox<?> Continent;
 	private JTextField SurfaceArea;
 	private JTextField HeadOfState;
+	private JTextField FindByCode;
+	private JTextField FindByName;
 
 	CountryDAO countryDAO = new CountryDAOImpl(); // calling method
 
@@ -71,6 +74,9 @@ public class CountryDAOPattern {
 		Name = new JTextField();
 		SurfaceArea = new JTextField();
 		HeadOfState = new JTextField();
+		FindByCode = new JTextField();
+		FindByName = new JTextField();
+		
 
 		// create JComboBox
 		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America" };
@@ -90,7 +96,13 @@ public class CountryDAOPattern {
 		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
 		JButton btnFindCountryByName = new JButton("Find a country by name");
 
-		// btnSaveNewCountry .setBackground(Color.RED);// add color in button
+		btnSaveNewCountry .setBackground(Color.RED);// add color in button
+		
+		/*
+		//giving border color for textField
+		FindByCode.setBorder(new LineBorder(Color.green,1));
+		FindByName.setBorder(new LineBorder(Color.green,1));
+		*/
 
 		// Specifying where each text field to be
 		Code.setBounds(250, 500, 150, 50);
@@ -98,6 +110,8 @@ public class CountryDAOPattern {
 		Continent.setBounds(620, 500, 200, 50);
 		SurfaceArea.setBounds(830, 500, 200, 50);
 		HeadOfState.setBounds(1040, 500, 200, 50);
+		FindByCode.setBounds(20, 160, 210, 50);
+		FindByName.setBounds(20, 300, 210, 50);
 
 		// Specifying where each JLabel to be
 		LCode.setBounds(310, 470, 100, 40);
@@ -109,9 +123,10 @@ public class CountryDAOPattern {
 		// Specifying where each button to be
 		btnRetrieveAllRecords.setBounds(20, 20, 210, 50);
 		btnListAllCountries.setBounds(20, 80, 210, 50);
-		btnFindCountryByCountryCode.setBounds(20, 140, 210, 50);
-		btnFindCountryByName.setBounds(20, 200, 210, 50);
+		btnFindCountryByCountryCode.setBounds(20, 220, 210, 50);
+		btnFindCountryByName.setBounds(20, 360, 210, 50);
 		btnSaveNewCountry.setBounds(20, 500, 210, 50);
+		
 		// create JScrollPane
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(250, 20, 980, 440);
@@ -126,6 +141,8 @@ public class CountryDAOPattern {
 		frame.add(Continent);
 		frame.add(SurfaceArea);
 		frame.add(HeadOfState);
+		frame.add(FindByCode);
+		frame.add(FindByName);
 
 		// add JLabels to the JFrame
 		frame.add(LCode);
@@ -161,6 +178,27 @@ public class CountryDAOPattern {
 
 				conditions();
 
+			}
+		});
+		
+		btnFindCountryByCountryCode.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				FindCountryByCode(); //calling FindCountryByCode
+				
+			}
+		});
+		
+		btnFindCountryByName.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				FindCountryByCountryName(); // calling FindCountryByCountryName
 			}
 		});
 
@@ -263,5 +301,28 @@ public class CountryDAOPattern {
 		HeadOfState.setText("");
 
 	} // refresh
+	
+	// FindCountryByCode
+	public void FindCountryByCode() {
+		
+		
+	   Country country = countryDAO.FindCountryByCode(FindByCode.getText());
+	   String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+	   
+	// adding data to table
+				String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
+						country.getHeadOfState() };
+				((DefaultTableModel) table.getModel()).addRow(data);
+	   
+
+		
+	}// end FindCountryByCode
+	
+	// FindCountryByCountryName
+	public void FindCountryByCountryName() {
+		
+		
+		
+	}// end FindCountryByCountryName
 
 }
