@@ -20,8 +20,7 @@ public class CountryDAOImpl implements CountryDAO {
 		// TODO Auto-generated method stub
 
 		// getting the connection
-		DatabaseConnection databaseCo = new DatabaseConnection();
-		Connection conn = databaseCo.MySQLConnection();
+		Connection conn = DatabaseConnection.MySQLConnection();
 		Statement stmt = null;
 		ResultSet reslt = null;
 		List<Country> countryList = new ArrayList<Country>();
@@ -63,8 +62,8 @@ public class CountryDAOImpl implements CountryDAO {
 
 		// Insert query
 		try {
-			DatabaseConnection databaseCo = new DatabaseConnection();
-			Conn = databaseCo.MySQLConnection();
+			
+			Conn = DatabaseConnection.MySQLConnection();
 			Stmt = Conn.prepareStatement(query);
 
 			Stmt.executeUpdate(query); // executing
@@ -82,8 +81,7 @@ public class CountryDAOImpl implements CountryDAO {
 	public Country FindCountryByCode(String countryCode) { // passing Country Code
 
 		// getting the connection
-		DatabaseConnection databaseCo = new DatabaseConnection();
-		Connection Conn = databaseCo.MySQLConnection();
+		Connection Conn = DatabaseConnection.MySQLConnection();
 		Statement stmt = null;
 		ResultSet reslt = null;
 
@@ -121,8 +119,7 @@ public class CountryDAOImpl implements CountryDAO {
 	public Country FindCountryByName(String countryName) { // passing Country Name
 
 		// getting the connection
-		DatabaseConnection databaseCo = new DatabaseConnection();
-		Connection Conn = databaseCo.MySQLConnection();
+		Connection Conn = DatabaseConnection.MySQLConnection();
 		Statement stmt = null;
 		ResultSet reslt = null;
 
