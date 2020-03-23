@@ -10,9 +10,7 @@ public class Country {
 	private float SurfaceArea;
 	private String HeadOfState;
 	
-	
-	// Getter and Setter
-	
+	//getter and setter
 	public String getCode() {
 		return Code;
 	}
@@ -43,6 +41,6 @@ public class Country {
 	public void setHeadOfState(String headOfState) {
 		HeadOfState = headOfState;
 	}
-
+	
 
 }

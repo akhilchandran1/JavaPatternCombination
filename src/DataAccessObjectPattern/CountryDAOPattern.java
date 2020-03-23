@@ -19,6 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 import DAOImpl.CountryDAOImpl;
 import DataTransferObjectPattern.Country;
+import DataTransferObjectPattern.continent;
 
 public class CountryDAOPattern {
 
@@ -200,15 +201,15 @@ public class CountryDAOPattern {
 				FindCountryByCountryName(); // calling FindCountryByCountryName
 			}
 		});
-		
+
 		btnListAllCountries.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				ListAllCountries(); // calling ListAllCountries
-				
+
 			}
 		});
 
@@ -235,24 +236,23 @@ public class CountryDAOPattern {
 
 		}
 	}// end PopulateData
-	
+
 	// ListAllCountries
 	public void ListAllCountries() {
-		
+
 		RefreshTable(); // calling RefreshTable
-		
+
 		// getting all the data from country table
 		for (Country country : countryDAO.ListAllCountry()) {
 
 			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
 
 			// adding data to table
-			String[] data = { "", country.getName(), "", "", ""};
+			String[] data = { "", country.getName(), "", "", "" };
 			((DefaultTableModel) table.getModel()).addRow(data);
 
 		}
-		
-		
+
 	}// ListAllCountries
 
 	// add new country
@@ -278,8 +278,43 @@ public class CountryDAOPattern {
 
 	}// end addCountry
 
+	public void enumCheck() {
+
+		// "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South
+		// America"
+
+		continent asia = continent.ASIA;
+		String asi = asia.getCont();
+		continent europ = continent.EUROPE;
+		String eur = europ.getCont();
+		continent northAmerica = continent.NORTHAMERICA;
+		String northAm = northAmerica.getCont();
+		continent africa = continent.AFRICA;
+		String afri = africa.getCont();
+		continent oceania = continent.OCEANIA;
+		String ocea = oceania.getCont();
+		continent antarctica = continent.ANTARCTICA;
+		String anta = antarctica.getCont();
+		continent southAmerica = continent.SOUTHAMERICA;
+		String southAme = southAmerica.getCont();
+
+		if (asi == Continent.getSelectedItem() || eur == Continent.getSelectedItem()
+				|| northAm == Continent.getSelectedItem() || afri == Continent.getSelectedItem()
+				|| ocea == Continent.getSelectedItem() || anta == Continent.getSelectedItem()
+				|| southAme == Continent.getSelectedItem()) {
+
+			addCountry(); // calling addCountry
+
+			System.out.println(Continent.getSelectedItem()+"-"+" an enum and its working");
+		} else {
+			System.out.println(Continent.getSelectedItem()+"-"+"is not a valid Continent");
+		}
+	}
+
 	// conditions
 	public void conditions() {
+		
+		//Float.parseFloat(SurfaceArea.getText());
 
 		try {
 
@@ -305,7 +340,7 @@ public class CountryDAOPattern {
 			} else if (SurfaceArea.getText().equals("")) {
 
 				// show message dialog
-				JOptionPane.showMessageDialog(null, "Please enter Surface Area");
+				JOptionPane.showMessageDialog(null, "Please enter valid Surface Area");
 
 				// if its empty will print
 			} else if (HeadOfState.getText().equals("")) {
@@ -315,13 +350,26 @@ public class CountryDAOPattern {
 
 				// else call addCountry
 			} else {
-				addCountry(); // calling addCountry
+
+				floatNumberValidation(); //calling floatNumberValidation
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	} // end conditions
-
+	
+	public void floatNumberValidation() {
+		
+		if (SurfaceArea.getText().matches("[-+]?[0-9]*\\.?[0-9]+")) {
+			enumCheck(); //calling enumCheck
+		}else {
+			// show message dialog
+			JOptionPane.showMessageDialog(null, "Please enter a valid Surface Area");
+		}
+	}
+		
+	
 	// refresh
 	public void Refresh() {
 
@@ -359,15 +407,14 @@ public class CountryDAOPattern {
 
 	// FindCountryByCountryName
 	public void FindCountryByCountryName() {
-		
+
 		RefreshTable(); // calling RefreshTable
 
-		Country country = countryDAO.FindCountryByName(FindByName.getText());
-		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+		Country count = countryDAO.FindCountryByName(FindByName.getText());
+		String surfaceArea = String.valueOf(count.getSurfaceArea()); // converting float to String
 
 		// adding data to table
-		String[] data = { country.getCode(), country.getName(), country.getContinent(), surfaceArea,
-				country.getHeadOfState() };
+		String[] data = { count.getCode(), count.getName(), count.getContinent(), surfaceArea, count.getHeadOfState() };
 		((DefaultTableModel) table.getModel()).addRow(data);
 
 	}// end FindCountryByCountryName

@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import BuilderDesignPattern.CountryBuilder;
+import BuilderDesignPattern.country;
 import DataAccessObjectPattern.CountryDAO;
 import DataAccessObjectPattern.DatabaseConnection;
 import DataTransferObjectPattern.Country;
@@ -30,9 +32,9 @@ public class CountryDAOImpl implements CountryDAO {
 			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);
-
+			
 			while (reslt.next()) {
-
+		
 				Country country = new Country(); // country object
 				country.setCode(reslt.getString("Code"));
 				country.setName(reslt.getString("Name"));
@@ -50,15 +52,16 @@ public class CountryDAOImpl implements CountryDAO {
 		return countryList; // returning the list
 	} // end ListAllCountry
 
-	@Override
-	public void addCountry(Country country) { // passing the country object
+	
+	public void addCountry(Country count) { // passing the country object
 		Connection Conn = null;
 		Statement Stmt = null;
+		//count = new CountryBuilder().getCountry()
 
 		// getting values
-		String query = "INSERT INTO country" + " VALUES(" + "'" + country.getCode() + "'" + "," + "'"
-				+ country.getName() + "'" + "," + "'" + country.getContinent() + "'" + "," + country.getSurfaceArea()
-				+ "," + "'" + country.getHeadOfState() + "'" + ")";
+		String query = "INSERT INTO country" + " VALUES(" + "'" + count.getCode() + "'" + "," + "'"
+				+ count.getName() + "'" + "," + "'" + count.getContinent() + "'" + "," + count.getSurfaceArea()
+				+ "," + "'" + count.getHeadOfState() + "'" + ")";
 
 		// Insert query
 		try {
