@@ -28,10 +28,10 @@ public class CountryDAOImpl implements CountryDAO {
 		List<Country> countryList = new ArrayList<Country>();
 		try {
 
-			// executing Query
+			
 			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
-			reslt = stmt.executeQuery(query);
+			reslt = stmt.executeQuery(query);// executing Query
 			
 			while (reslt.next()) {
 		

@@ -79,7 +79,7 @@ public class CountryDAOPattern {
 		FindByName = new JTextField();
 
 		// create JComboBox
-		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America" };
+		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America", "Wrong Continent to try enum" };
 		Continent = new JComboBox<Object>(options);
 
 		// Create JLabel
@@ -277,12 +277,11 @@ public class CountryDAOPattern {
 		JOptionPane.showMessageDialog(null, "New Country Successfully Added");
 
 	}// end addCountry
-
+	
+	// enumCheck
 	public void enumCheck() {
 
-		// "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South
-		// America"
-
+		// getting enum constants and associated values
 		continent asia = continent.ASIA;
 		String asi = asia.getCont();
 		continent europ = continent.EUROPE;
@@ -298,6 +297,7 @@ public class CountryDAOPattern {
 		continent southAmerica = continent.SOUTHAMERICA;
 		String southAme = southAmerica.getCont();
 
+		// checking, is user input matching to enum 
 		if (asi == Continent.getSelectedItem() || eur == Continent.getSelectedItem()
 				|| northAm == Continent.getSelectedItem() || afri == Continent.getSelectedItem()
 				|| ocea == Continent.getSelectedItem() || anta == Continent.getSelectedItem()
@@ -305,11 +305,12 @@ public class CountryDAOPattern {
 
 			addCountry(); // calling addCountry
 
-			System.out.println(Continent.getSelectedItem()+"-"+" an enum and its working");
 		} else {
-			System.out.println(Continent.getSelectedItem()+"-"+"is not a valid Continent");
+			
+			// show message dialog
+			JOptionPane.showMessageDialog(null, Continent.getSelectedItem()+"-"+"is not a valid Continent");
 		}
-	}
+	} // end enumCheck
 
 	// conditions
 	public void conditions() {
@@ -361,6 +362,7 @@ public class CountryDAOPattern {
 	
 	public void floatNumberValidation() {
 		
+		// checking user input is a integer or float
 		if (SurfaceArea.getText().matches("[-+]?[0-9]*\\.?[0-9]+")) {
 			enumCheck(); //calling enumCheck
 		}else {
@@ -383,7 +385,8 @@ public class CountryDAOPattern {
 
 	// Refresh JTable
 	public void RefreshTable() {
-
+		
+		// refreshing table
 		DefaultTableModel Tablemodel = (DefaultTableModel) table.getModel();
 		while (Tablemodel.getRowCount() > 0) {
 			Tablemodel.setRowCount(0);
@@ -393,7 +396,7 @@ public class CountryDAOPattern {
 	// FindCountryByCode
 	public void FindCountryByCode() {
 
-		RefreshTable();
+		RefreshTable(); //calling RefreshTable
 
 		Country country = countryDAO.FindCountryByCode(FindByCode.getText());
 		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
