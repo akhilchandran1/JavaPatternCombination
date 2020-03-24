@@ -7,8 +7,6 @@ import java.sql.DriverManager;
  * 	SINGLETON DATABASE CONNECTION
  */
 
-
-
 public class DatabaseConnection {
 
 	// Initializing Connection variable

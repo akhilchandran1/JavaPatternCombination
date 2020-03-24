@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import BuilderDesignPattern.CountryBuilder;
 import BuilderDesignPattern.country;
 import DataAccessObjectPattern.CountryDAO;
 import DataAccessObjectPattern.DatabaseConnection;
@@ -28,13 +27,12 @@ public class CountryDAOImpl implements CountryDAO {
 		List<Country> countryList = new ArrayList<Country>();
 		try {
 
-			
 			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);// executing Query
-			
+
 			while (reslt.next()) {
-		
+
 				Country country = new Country(); // country object
 				country.setCode(reslt.getString("Code"));
 				country.setName(reslt.getString("Name"));
@@ -52,20 +50,17 @@ public class CountryDAOImpl implements CountryDAO {
 		return countryList; // returning the list
 	} // end ListAllCountry
 
-	
-	public void addCountry(Country count) { // passing the country object
+	public void addCountry(country count) { // passing the country object
 		Connection Conn = null;
 		Statement Stmt = null;
-		//count = new CountryBuilder().getCountry()
+		// count = new CountryBuilder().getCountry()
 
 		// getting values
-		String query = "INSERT INTO country" + " VALUES(" + "'" + count.getCode() + "'" + "," + "'"
-				+ count.getName() + "'" + "," + "'" + count.getContinent() + "'" + "," + count.getSurfaceArea()
-				+ "," + "'" + count.getHeadOfState() + "'" + ")";
+		String query = "INSERT INTO country" + " VALUES(" + count.toString() + ")";
 
 		// Insert query
 		try {
-			
+
 			Conn = DatabaseConnection.MySQLConnection();
 			Stmt = Conn.prepareStatement(query);
 

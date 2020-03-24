@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import BuilderDesignPattern.country;
 import DAOImpl.CountryDAOImpl;
 import DataTransferObjectPattern.Country;
 import DataTransferObjectPattern.continent;
@@ -79,7 +80,8 @@ public class CountryDAOPattern {
 		FindByName = new JTextField();
 
 		// create JComboBox
-		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America", "Wrong Continent to try enum" };
+		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America",
+				"Wrong Continent to try enum" };
 		Continent = new JComboBox<Object>(options);
 
 		// Create JLabel
@@ -176,7 +178,7 @@ public class CountryDAOPattern {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
-				conditions();
+				conditions(); // calling conditions
 
 			}
 		});
@@ -254,30 +256,48 @@ public class CountryDAOPattern {
 		}
 
 	}// ListAllCountries
+	/*
+	 * 
+	 * // add new country public void addCountry() {
+	 * 
+	 * float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting
+	 * String to float
+	 * 
+	 * // Adding new country Country NewCountry = new Country();
+	 * NewCountry.setCode(Code.getText()); NewCountry.setName(Name.getText());
+	 * NewCountry.setContinent(Continent.getSelectedItem().toString());
+	 * NewCountry.setSurfaceArea(fSurfaceArea);
+	 * NewCountry.setHeadOfState(HeadOfState.getText());
+	 * 
+	 * countryDAO.addCountry(NewCountry); // countryDAOImpl method
+	 * 
+	 * Refresh(); // calling refresh RefreshTable();
+	 * 
+	 * // show message dialog JOptionPane.showMessageDialog(null,
+	 * "New Country Successfully Added");
+	 * 
+	 * }// end addCountry
+	 */
 
-	// add new country
 	public void addCountry() {
 
 		float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting String to float
 
 		// Adding new country
-		Country NewCountry = new Country();
-		NewCountry.setCode(Code.getText());
-		NewCountry.setName(Name.getText());
-		NewCountry.setContinent(Continent.getSelectedItem().toString());
-		NewCountry.setSurfaceArea(fSurfaceArea);
-		NewCountry.setHeadOfState(HeadOfState.getText());
+		country NewCountry = new country.CountryBuilder().setCode(Code.getText()).setName(Name.getText())
+				.setContinent(Continent.getSelectedItem().toString()).setSurfaceArea(fSurfaceArea)
+				.setHeadOfState(HeadOfState.getText()).getCountry();
 
 		countryDAO.addCountry(NewCountry); // countryDAOImpl method
 
 		Refresh(); // calling refresh
-		RefreshTable();
+		RefreshTable(); // calling refreshTable
 
 		// show message dialog
 		JOptionPane.showMessageDialog(null, "New Country Successfully Added");
 
-	}// end addCountry
-	
+	}
+
 	// enumCheck
 	public void enumCheck() {
 
@@ -297,7 +317,7 @@ public class CountryDAOPattern {
 		continent southAmerica = continent.SOUTHAMERICA;
 		String southAme = southAmerica.getCont();
 
-		// checking, is user input matching to enum 
+		// checking, is user input matching to enum
 		if (asi == Continent.getSelectedItem() || eur == Continent.getSelectedItem()
 				|| northAm == Continent.getSelectedItem() || afri == Continent.getSelectedItem()
 				|| ocea == Continent.getSelectedItem() || anta == Continent.getSelectedItem()
@@ -306,16 +326,16 @@ public class CountryDAOPattern {
 			addCountry(); // calling addCountry
 
 		} else {
-			
+
 			// show message dialog
-			JOptionPane.showMessageDialog(null, Continent.getSelectedItem()+"-"+"is not a valid Continent");
+			JOptionPane.showMessageDialog(null, Continent.getSelectedItem() + "-" + "is not a valid Continent");
 		}
 	} // end enumCheck
 
 	// conditions
 	public void conditions() {
-		
-		//Float.parseFloat(SurfaceArea.getText());
+
+		// Float.parseFloat(SurfaceArea.getText());
 
 		try {
 
@@ -352,26 +372,25 @@ public class CountryDAOPattern {
 				// else call addCountry
 			} else {
 
-				floatNumberValidation(); //calling floatNumberValidation
+				floatNumberValidation(); // calling floatNumberValidation
 
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	} // end conditions
-	
+
 	public void floatNumberValidation() {
-		
+
 		// checking user input is a integer or float
 		if (SurfaceArea.getText().matches("[-+]?[0-9]*\\.?[0-9]+")) {
-			enumCheck(); //calling enumCheck
-		}else {
+			enumCheck(); // calling enumCheck
+		} else {
 			// show message dialog
 			JOptionPane.showMessageDialog(null, "Please enter a valid Surface Area");
 		}
 	}
-		
-	
+
 	// refresh
 	public void Refresh() {
 
@@ -385,7 +404,7 @@ public class CountryDAOPattern {
 
 	// Refresh JTable
 	public void RefreshTable() {
-		
+
 		// refreshing table
 		DefaultTableModel Tablemodel = (DefaultTableModel) table.getModel();
 		while (Tablemodel.getRowCount() > 0) {
@@ -396,7 +415,7 @@ public class CountryDAOPattern {
 	// FindCountryByCode
 	public void FindCountryByCode() {
 
-		RefreshTable(); //calling RefreshTable
+		RefreshTable(); // calling RefreshTable
 
 		Country country = countryDAO.FindCountryByCode(FindByCode.getText());
 		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
