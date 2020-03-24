@@ -22,7 +22,6 @@ public class country {
 		this.Continent = Continent;
 		this.SurfaceArea = SurfaceArea;
 		this.HeadOfState = HeadOfState;
-		System.out.println("tis a country class");
 
 	}
 
@@ -34,7 +33,8 @@ public class country {
 	}
 
 	public static class CountryBuilder {
-
+		
+		//variables
 		private String Code;
 		private String Name;
 		private String Continent;

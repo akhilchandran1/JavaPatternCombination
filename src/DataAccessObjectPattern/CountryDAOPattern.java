@@ -256,29 +256,8 @@ public class CountryDAOPattern {
 		}
 
 	}// ListAllCountries
-	/*
-	 * 
-	 * // add new country public void addCountry() {
-	 * 
-	 * float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting
-	 * String to float
-	 * 
-	 * // Adding new country Country NewCountry = new Country();
-	 * NewCountry.setCode(Code.getText()); NewCountry.setName(Name.getText());
-	 * NewCountry.setContinent(Continent.getSelectedItem().toString());
-	 * NewCountry.setSurfaceArea(fSurfaceArea);
-	 * NewCountry.setHeadOfState(HeadOfState.getText());
-	 * 
-	 * countryDAO.addCountry(NewCountry); // countryDAOImpl method
-	 * 
-	 * Refresh(); // calling refresh RefreshTable();
-	 * 
-	 * // show message dialog JOptionPane.showMessageDialog(null,
-	 * "New Country Successfully Added");
-	 * 
-	 * }// end addCountry
-	 */
 
+	// add new country
 	public void addCountry() {
 
 		float fSurfaceArea = Float.parseFloat(SurfaceArea.getText()); // converting String to float
@@ -293,10 +272,7 @@ public class CountryDAOPattern {
 		Refresh(); // calling refresh
 		RefreshTable(); // calling refreshTable
 
-		// show message dialog
-		JOptionPane.showMessageDialog(null, "New Country Successfully Added");
-
-	}
+	}// end addCountry
 
 	// enumCheck
 	public void enumCheck() {

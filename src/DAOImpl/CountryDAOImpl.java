@@ -3,6 +3,7 @@ package DAOImpl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +67,22 @@ public class CountryDAOImpl implements CountryDAO {
 
 			Stmt.executeUpdate(query); // executing
 
+			// show message dialog
+			JOptionPane.showMessageDialog(null, "New Country Successfully Added");
+
 			// catch
 		} catch (SQLException e) {
+			
+			// if the country code is already exist this message will pop up
+			if (e instanceof SQLIntegrityConstraintViolationException) {
 
-			e.printStackTrace();
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "Country code is already exist. please try with different code");
+
+			} else {
+				//other errors
+				e.printStackTrace();
+			}
 
 		}
 
