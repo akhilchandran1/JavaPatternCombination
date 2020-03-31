@@ -226,6 +226,10 @@ public class CountryDAOPattern {
 	public void PopulateData() {
 
 		RefreshTable(); // calling RefreshTable
+		
+		// boolean
+		boolean continentExists = false;
+		
 		// getting all the data from country table
 		for (Country country : countryDAO.ListAllCountry()) {
 
@@ -234,8 +238,6 @@ public class CountryDAOPattern {
 			
 			// getting continent from DB
 			String DBContinents = country.getContinent();
-			// boolean
-			boolean continentExists = false;
 			// getting continent enum values
 			Continent[] Contin = Continent.values();
 			// this loop for continent
@@ -251,14 +253,17 @@ public class CountryDAOPattern {
 					break; // break
 				}
 
-			}
-			// if continent is not exist will do this
-			if (!continentExists) {
-				JOptionPane.showMessageDialog(null,  "Continent is not matching with Enum Continent");
-				
+
 			}
 
 		}
+		// if continent is not exist will do this
+		if (!continentExists) {
+			JOptionPane.showMessageDialog(null,  "Continent is not matching with Enum Continent");
+			
+		}
+
+
 	}// end PopulateData
 	
 
@@ -267,14 +272,15 @@ public class CountryDAOPattern {
 
 		RefreshTable(); // calling RefreshTable
 	
+		// boolean
+		boolean continentExists = false;
 
 		// getting all the data from country table
 		for (Country country : countryDAO.ListAllCountry()) {
 			
 			// getting continent from database
 			String DBContinent = country.getContinent();
-			// boolean
-			boolean continentExists = false;
+
 			// getting continent enum values
 			Continent[] Contin = Continent.values();
 			// this loop for continent
@@ -291,12 +297,12 @@ public class CountryDAOPattern {
 
 			}
 
-			// if continent is not exist will do this
-			if (!continentExists) {
-				JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
-				
-			}
+		}
 
+		// if continent is not exist will do this
+		if (!continentExists) {
+			JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
+			
 		}
 
 	}// ListAllCountries
