@@ -32,12 +32,15 @@ public class CountryDAOImpl implements CountryDAO {
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);// executing Query
 
+			
 			while (reslt.next()) {
 
 				Country country = new Country(); // country object
 				country.setCode(reslt.getString("Code"));
 				country.setName(reslt.getString("Name"));
 				country.setContinent(reslt.getString("Continent"));
+				//Continent.valueof(rs.getString());
+				
 				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
 				country.setHeadOfState(reslt.getString("HeadOfState"));
 				countryList.add(country); // adding to the list
@@ -101,6 +104,8 @@ public class CountryDAOImpl implements CountryDAO {
 			// executing Query
 			String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
 																						// code (user input)
+			
+			
 			stmt = Conn.createStatement();
 			reslt = stmt.executeQuery(query);
 			if (reslt.next()) {
@@ -139,6 +144,8 @@ public class CountryDAOImpl implements CountryDAO {
 			// executing Query
 			String query = "SELECT * FROM country where Name='" + countryName + "'"; // select from country table by
 																						// Name (user input)
+
+			
 			stmt = Conn.createStatement();
 			reslt = stmt.executeQuery(query);
 			if (reslt.next()) {

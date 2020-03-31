@@ -1,28 +1,31 @@
 package DataTransferObjectPattern;
 
+
+
 /*
  * ENUM
  */
 
-public enum continent {
+public enum Continent {
+
 
 	// adding enum constants and associating with values
 
-	ASIA("Asia"), EUROPE("Europ"), NORTHAMERICA("North America"), AFRICA("Africa"), OCEANIA("Oceania"),
-	ANTARCTICA("Antarctica"), SOUTHAMERICA("Soutn America");
-
+	ASIA("Asia"), EUROPE("Europe"), NORTHAMERICA("North America"), AFRICA("Africa"), OCEANIA("Oceania"),
+	ANTARCTICA("Antarctica"), SOUTHAMERICA("South America");
+	
+	
 	// adding instance variable
-	private String Con;
-
-	// constructor
-	continent(String Con) {
-
-		this.Con = Con;
-
-	}
-
+	   private String conti;
+	   
 	// getter method
-	public String getCont() {
-		return Con;
-	}
+	   public String getContinent() {
+	       return this.conti;
+	   }
+	   
+	// constructor
+	   Continent(String conti) {
+	           this.conti = conti;
+	   }
 }
+

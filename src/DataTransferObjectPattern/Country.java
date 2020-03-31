@@ -50,5 +50,6 @@ public class Country {
 	public void setHeadOfState(String headOfState) {
 		HeadOfState = headOfState;
 	}
+	
 
 }
