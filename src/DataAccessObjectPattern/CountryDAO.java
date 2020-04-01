@@ -1,5 +1,6 @@
 package DataAccessObjectPattern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import BuilderDesignPattern.country;
@@ -15,6 +16,6 @@ public interface CountryDAO {
 
 	public Country FindCountryByCode(String countryCode);
 
-	public Country FindCountryByName(String countryName);
+	public ArrayList<Country> FindCountryByName(String countryName);
 
 }
