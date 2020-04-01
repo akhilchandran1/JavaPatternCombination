@@ -1,6 +1,7 @@
 package DAOImpl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
+import com.sun.jdi.connect.spi.ClosedConnectionException;
 
 import BuilderDesignPattern.country;
 import DataAccessObjectPattern.CountryDAO;
@@ -95,40 +99,32 @@ public class CountryDAOImpl implements CountryDAO {
 
 		// getting the connection
 		Connection Conn = DatabaseConnection.MySQLConnection();
-		Statement stmt = null;
-		ResultSet reslt = null;
+
+		// executing Query
+		String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
+																					// code (user input)
 
 		try {
 
-			// executing Query
-			String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
-																						// code (user input)
+			// statement and resultSet
+			Statement stmt = Conn.createStatement();
+			ResultSet reslt = stmt.executeQuery(query);
 
-			stmt = Conn.createStatement();
-			reslt = stmt.executeQuery(query);
-			try {
-				if (reslt.next()) {
-					Country country = new Country(); // country object
-					country.setCode(reslt.getString("Code"));
-					country.setName(reslt.getString("Name"));
-					country.setContinent(reslt.getString("Continent"));
-					country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
-					country.setHeadOfState(reslt.getString("HeadOfState"));
+			while (reslt.next()) {
+				Country country = new Country(); // country object
+				country.setCode(reslt.getString("Code"));
+				country.setName(reslt.getString("Name"));
+				country.setContinent(reslt.getString("Continent"));
+				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
+				country.setHeadOfState(reslt.getString("HeadOfState"));
 
-					return country; // returning back
+				return country; // returning back
 
-				} else {
-
-					// show message dialog
-					JOptionPane.showMessageDialog(null, "No Country in this Code");
-
-				}
-			} catch (NullPointerException e) {
-				System.out.print("NullPointerException Caught");
 			}
 
 			// catch
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 
@@ -159,8 +155,6 @@ public class CountryDAOImpl implements CountryDAO {
 				country.setCode(reslt.getString("Code"));
 				country.setName(reslt.getString("Name"));
 				country.setContinent(reslt.getString("Continent"));
-				// Continent.valueof(rs.getString());
-
 				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
 				country.setHeadOfState(reslt.getString("HeadOfState"));
 				countryL.add(country); // adding to the list

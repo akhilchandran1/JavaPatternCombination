@@ -432,46 +432,54 @@ public class CountryDAOPattern {
 		RefreshTable(); // calling RefreshTable
 		// finding by code
 		Country country = countryDAO.FindCountryByCode(FindByCode.getText());
-		String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
 
-		// getting continent from database
-		String DBContinent = country.getContinent();
 		// boolean
 		boolean continentExists = false;
 		// getting continent enum values
 		Continent[] Contin = Continent.values();
-		// this loop for continent
-		for (Continent continents : Contin) {
-			// matching with database continents
-			if (DBContinent.equalsIgnoreCase(continents.getContinent())) {
-				continentExists = true;
 
-				// adding data to table
-				String[] data = { country.getCode(), country.getName(), continents.getContinent(), surfaceArea,
-						country.getHeadOfState() };
-				((DefaultTableModel) table.getModel()).addRow(data);
-				break; // break
+		try {
+
+			// this loop for continent
+			for (Continent continents : Contin) {
+
+				// matching with database continents
+				while (country.getContinent().equalsIgnoreCase(continents.getContinent())) {
+					continentExists = true;
+					String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+					// adding data to table
+					String[] data = { country.getCode(), country.getName(), continents.getContinent(), surfaceArea,
+							country.getHeadOfState() };
+					((DefaultTableModel) table.getModel()).addRow(data);
+					break; // break
+				}
 			}
 
-		}
-		// if continent is not exist will do this
-		if (!continentExists) {
-			JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
+			// if continent is not exist will do this
+			if (!continentExists) {
+				// show message dialog
+				JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
+			}
+			// catch null point exception
+		} catch (NullPointerException e) {
+			// show message dialog
+			JOptionPane.showMessageDialog(null, "No Country in this Code. Please try with different code");//
 		}
 
 	}// end FindCountryByCode
 
-	// Populate data from database
+	// FindCountryByCountryName
 	public void FindCountryByCountryName() {
 
 		RefreshTable(); // calling RefreshTable
 
 		// boolean
 		boolean continentExists = false;
+		boolean countryExists = false;
 
 		// getting all the data from country table
 		for (Country country : countryDAO.FindCountryByName(FindByName.getText())) {
-
+			countryExists = true;
 			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
 
 			// getting continent from DB
@@ -495,12 +503,18 @@ public class CountryDAOPattern {
 			}
 
 		}
-		// if continent is not exist will do this
-		if (!continentExists) {
+		// if country is not exist will do this
+		if (!countryExists) {
+			// show message dialog
+			JOptionPane.showMessageDialog(null, "No Country in this Name. Please try with different Name");//
+
+			// if continent is not exist will do this
+		} else if (!continentExists) {
+			// show message dialog
 			JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
 
 		}
 
-	}// end PopulateData
+	}// end FindCountryByCountryName
 
 }

@@ -33,8 +33,8 @@ public class country {
 	}
 
 	public static class CountryBuilder {
-		
-		//variables
+
+		// variables
 		private String Code;
 		private String Name;
 		private String Continent;
