@@ -1,7 +1,9 @@
 package DataTransferObjectPattern;
 
+import java.util.ArrayList;
+
 /*
- * ENUM
+ * ENUM (Singleton)
  */
 
 public enum Continent {
@@ -24,3 +26,36 @@ public enum Continent {
 		this.conti = conti;
 	}
 }
+
+/*
+ //Another Singleton enum
+
+public enum SingletonContinent {
+
+	INSTANCE;
+
+	private static SingletonContinent singletonContinent;
+	private ArrayList<String> Continents;
+
+	SingletonContinent(){
+		Continents = new ArrayList<String>();
+		Continents.add("Asia");
+		Continents.add("Europe");
+		Continents.add("North America");
+		Continents.add("Africa");
+		Continents.add("Oceania");
+		Continents.add("Antarctica");
+		Continents.add("South America");
+
+		
+	}
+
+	public String getContinent() {
+		return Continents.toString();
+	}
+
+
+}
+
+
+*/
