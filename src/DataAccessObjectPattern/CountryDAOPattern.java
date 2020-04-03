@@ -92,9 +92,9 @@ public class CountryDAOPattern {
 		JLabel LHeadOfState = new JLabel("Head Of State");
 
 		// create JButtons
-		JButton btnSaveNewCountry = new JButton("Save a new country in the database");
-		JButton btnRetrieveAllRecords = new JButton("Retrieve all records");
-		JButton btnListAllCountries = new JButton("List all countries in the database");
+		JButton btnSaveNewCountry = new JButton("Save a new country");
+		JButton btnRetrieveAllRecords = new JButton("List all countries");
+		JButton btnListAllCountries = new JButton("List all countries Name");
 		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
 		JButton btnFindCountryByName = new JButton("Find a country by name");
 

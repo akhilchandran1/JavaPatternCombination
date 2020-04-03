@@ -16,14 +16,14 @@ public enum Continent {
 	// adding instance variable
 	private String conti;
 
-	// getter method
-	public String getContinent() {
-		return this.conti;
-	}
-
 	// constructor
 	Continent(String conti) {
 		this.conti = conti;
+	}
+
+	// getter method
+	public String getContinent() {
+		return this.conti;
 	}
 }
 
