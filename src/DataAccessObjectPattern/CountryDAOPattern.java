@@ -92,7 +92,7 @@ public class CountryDAOPattern {
 		JLabel LHeadOfState = new JLabel("Head Of State");
 
 		// create JButtons
-		JButton btnSaveNewCountry = new JButton("Save a new country");
+		JButton btnSaveNewCountry = new JButton("Save a new country ");
 		JButton btnRetrieveAllRecords = new JButton("List all countries");
 		JButton btnListAllCountries = new JButton("List all countries Name");
 		JButton btnFindCountryByCountryCode = new JButton("Find a country by country code");
@@ -311,20 +311,24 @@ public class CountryDAOPattern {
 
 		// getting user selected continent
 		String userInput = selectContinent.getSelectedItem().toString();
+		
+		Continent c = Continent.continent(selectContinent.getSelectedItem().toString()); 
+		
+		
 		// boolean
 		boolean continentExists = false;
 		// getting continent enum values
-		Continent[] Contin = Continent.values();
+		//Continent[] Contin = Continent.values();
 		// this loop for continent
-		for (Continent continents : Contin) {
+		//for (Continent continents : Contin) {
 			// matching with user input
-			if (userInput.equalsIgnoreCase(continents.getContinent())) {
+			if (userInput.equalsIgnoreCase(c.getContinent())) {
 				continentExists = true;
 				// System.out.println("its true"+""+continents.getContinent());
 
 				// Adding new country
 				country NewCountry = new country.CountryBuilder().setCode(Code.getText()).setName(Name.getText())
-						.setContinent(continents.getContinent()).setSurfaceArea(fSurfaceArea)
+						.setContinent(c).setSurfaceArea(fSurfaceArea)
 						.setHeadOfState(HeadOfState.getText()).getCountry();
 
 				countryDAO.addCountry(NewCountry); // countryDAOImpl method
@@ -332,10 +336,10 @@ public class CountryDAOPattern {
 				RefreshAddTextArea(); // calling refresh
 				RefreshTable(); // calling refreshTable
 
-				break; // break
+				//break; // break
 			}
 
-		}
+		//}
 		// if continent is not exist will do this
 		if (!continentExists) {
 			JOptionPane.showMessageDialog(null, "No such continent. Try again please");

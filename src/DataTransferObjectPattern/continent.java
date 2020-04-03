@@ -25,6 +25,17 @@ public enum Continent {
 	public String getContinent() {
 		return this.conti;
 	}
+	// converting enum
+	public static Continent continent(String cont) {
+		//checking is it matching with enum 
+		for(Continent c:Continent.values()) {
+			if(cont.equals(c.getContinent())) {
+				return c; //return if its matching
+			}
+		}
+		return null; // if not matching return null
+	}
+
 }
 
 /*
