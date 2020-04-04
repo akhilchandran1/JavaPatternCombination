@@ -80,8 +80,7 @@ public class CountryDAOPattern {
 		FindByName = new JTextField();
 
 		// create JComboBox
-		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America",
-				"to try wrong enum" };
+		String options[] = { "Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America" };
 		selectContinent = new JComboBox<Object>(options);
 
 		// Create JLabel
@@ -313,17 +312,8 @@ public class CountryDAOPattern {
 		String userInput = selectContinent.getSelectedItem().toString();
 		
 		Continent c = Continent.continent(selectContinent.getSelectedItem().toString()); 
-		
-		
-		// boolean
-		boolean continentExists = false;
-		// getting continent enum values
-		//Continent[] Contin = Continent.values();
-		// this loop for continent
-		//for (Continent continents : Contin) {
-			// matching with user input
+
 			if (userInput.equalsIgnoreCase(c.getContinent())) {
-				continentExists = true;
 				// System.out.println("its true"+""+continents.getContinent());
 
 				// Adding new country
@@ -338,13 +328,6 @@ public class CountryDAOPattern {
 
 				//break; // break
 			}
-
-		//}
-		// if continent is not exist will do this
-		if (!continentExists) {
-			JOptionPane.showMessageDialog(null, "No such continent. Try again please");
-			// exit program here or throw some exception
-		}
 
 	}// end addCountry
 
