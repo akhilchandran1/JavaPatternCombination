@@ -1,7 +1,7 @@
 package EnumContinent;
 
 /*
- * ENUM (Singleton)
+ * ENUM
  */
 
 public enum Continent {
