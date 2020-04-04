@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import BuilderDesignPattern.country;
-import DataTransferObjectPattern.Country;
 
 public interface CountryDAO {
 
@@ -14,8 +13,8 @@ public interface CountryDAO {
 
 	public void addCountry(country newCountry);
 
-	public Country FindCountryByCode(String countryCode);
+	public country FindCountryByCode(String countryCode);
 
-	public ArrayList<Country> FindCountryByName(String countryName);
+	public ArrayList<country> FindCountryByName(String countryName);
 
 }

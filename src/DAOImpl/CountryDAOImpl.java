@@ -1,7 +1,6 @@
 package DAOImpl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -11,14 +10,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
-import com.sun.jdi.connect.spi.ClosedConnectionException;
-
 import BuilderDesignPattern.country;
 import DataAccessObjectPattern.CountryDAO;
 import DataAccessObjectPattern.DatabaseConnection;
-import DataTransferObjectPattern.Continent;
-import DataTransferObjectPattern.Country;
+import EnumContinent.Continent;
 
 public class CountryDAOImpl implements CountryDAO {
 
@@ -28,8 +23,8 @@ public class CountryDAOImpl implements CountryDAO {
 
 		// getting the connection
 		Connection conn = DatabaseConnection.MySQLConnection();
-		Statement stmt = null;
-		ResultSet reslt = null;
+		Statement stmt = null; //statement
+		ResultSet reslt = null;//resultset
 		String query = "SELECT * FROM country"; // selecting from country table
 		List<country> countryList = new ArrayList<country>();
 
@@ -37,49 +32,45 @@ public class CountryDAOImpl implements CountryDAO {
 
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);// executing Query
-
+			// while result.next do this
 			while (reslt.next()) {
-				Continent c = Continent.continent(reslt.getString("Continent")); 
+				// Continent verification
+				Continent c = Continent.continent(reslt.getString("Continent"));
 
-					// Adding new country
-					country NewCountry = new country.CountryBuilder().setCode(reslt.getString("Code")).setName(reslt.getString("Name"))
-							.setContinent(c).setSurfaceArea(reslt.getFloat("SurfaceArea"))
-							.setHeadOfState(reslt.getString("HeadOfState")).getCountry();
+				// Adding new country
+				country NewCountry = new country.CountryBuilder().setCode(reslt.getString("Code"))
+																.setName(reslt.getString("Name"))
+																.setContinent(c)
+																.setSurfaceArea(reslt.getFloat("SurfaceArea"))
+																.setHeadOfState(reslt.getString("HeadOfState"))
+																.getCountry();
 
-					countryList.add(NewCountry); // countryDAOImpl method
-				
-				/*
-				country country = new country(); // country object
-				country.setCode(reslt.getString("Code"));
-				country.setName(reslt.getString("Name"));
-				country.setContinent(reslt.getString("Continent"));
-				// Continent.valueof(rs.getString());
-
-				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
-				country.setHeadOfState(reslt.getString("HeadOfState"));
-				countryList.add(country); // adding to the list
-				*/
+				countryList.add(NewCountry); //adding to the countryList
 			}
-
+			
+			//catch
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			e.printStackTrace(); //error
 		}
 
 		return countryList; // returning the list
+		
 	} // end ListAllCountry
+	
 
 	public void addCountry(country count) { // passing the country object
-		Connection Conn = null;
-		Statement Stmt = null;
-		// count = new CountryBuilder().getCountry()
+		
+		Connection Conn = null;// connection
+		Statement Stmt = null; //statement
 
 		// getting values
 		String query = "INSERT INTO country" + " VALUES(" + count.toString() + ")";
 
 		// Insert query
 		try {
-
+			
+			//database connection
 			Conn = DatabaseConnection.MySQLConnection();
 			Stmt = Conn.prepareStatement(query);
 
@@ -102,56 +93,61 @@ public class CountryDAOImpl implements CountryDAO {
 				e.printStackTrace();
 			}
 
-		}
+		}//end catch
 
 	} // end addCountry
 
 	@Override
-	public Country FindCountryByCode(String countryCode) { // passing Country Code
+	public country FindCountryByCode(String countryCode) { // passing Country Code
 
 		// getting the connection
-		Connection Conn = DatabaseConnection.MySQLConnection();
-
-		// executing Query
-		String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
-																					// code (user input)
+		Connection conn = DatabaseConnection.MySQLConnection();
+		Statement stmt = null;
+		ResultSet reslt = null;
 
 		try {
 
+			// executing Query
+			String query = "SELECT * FROM country where Code='" + countryCode + "'"; // select from country table by
+																						// code (user input)
+
 			// statement and resultSet
-			Statement stmt = Conn.createStatement();
-			ResultSet reslt = stmt.executeQuery(query);
+			stmt = conn.createStatement();
+			reslt = stmt.executeQuery(query);// executing Query
 
 			while (reslt.next()) {
-				Country country = new Country(); // country object
-				country.setCode(reslt.getString("Code"));
-				country.setName(reslt.getString("Name"));
-				country.setContinent(reslt.getString("Continent"));
-				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
-				country.setHeadOfState(reslt.getString("HeadOfState"));
+				
+				// Continent verification
+				Continent c = Continent.continent(reslt.getString("Continent"));
 
-				return country; // returning back
+				// Adding new country
+				country NewCountry = new country.CountryBuilder().setCode(reslt.getString("Code"))
+						.setName(reslt.getString("Name")).setContinent(c).setSurfaceArea(reslt.getFloat("SurfaceArea"))
+						.setHeadOfState(reslt.getString("HeadOfState")).getCountry();
+
+				return NewCountry; // returning NewCountry
 
 			}
 
 			// catch
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			e.printStackTrace();// error
 		}
 
-		return null;
+		return null; // return null
+		
 	}// end FindCountryByCode
 
 	@Override
-	public ArrayList<Country> FindCountryByName(String countryName) { // passing Country Name
+	public ArrayList<country> FindCountryByName(String countryName) { // passing Country Name
 		// TODO Auto-generated method stub
 
 		// getting the connection
 		Connection conn = DatabaseConnection.MySQLConnection();
 		Statement stmt = null;
 		ResultSet reslt = null;
-		ArrayList<Country> countryL = new ArrayList<Country>();
+		ArrayList<country> countryL = new ArrayList<country>();
 		try {
 
 			// executing Query
@@ -160,23 +156,25 @@ public class CountryDAOImpl implements CountryDAO {
 																							// Name (user input)
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);// executing Query
-
+			
 			while (reslt.next()) {
+				// Continent verification
+				Continent c = Continent.continent(reslt.getString("Continent"));
 
-				Country country = new Country(); // country object
-				country.setCode(reslt.getString("Code"));
-				country.setName(reslt.getString("Name"));
-				country.setContinent(reslt.getString("Continent"));
-				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
-				country.setHeadOfState(reslt.getString("HeadOfState"));
-				countryL.add(country); // adding to the list
+				// Adding new country
+				country NewCountry = new country.CountryBuilder().setCode(reslt.getString("Code"))
+						.setName(reslt.getString("Name")).setContinent(c).setSurfaceArea(reslt.getFloat("SurfaceArea"))
+						.setHeadOfState(reslt.getString("HeadOfState")).getCountry();
+
+				countryL.add(NewCountry);
 			}
-
+			//catch
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			e.printStackTrace();//error
 		}
 
 		return countryL; // returning the list
+		
 	} // end FindCountryByName
 }
