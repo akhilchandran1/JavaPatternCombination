@@ -226,39 +226,56 @@ public class CountryDAOPattern {
 
 		RefreshTable(); // calling RefreshTable
 
-		// boolean
-		boolean continentExists = false;
+			RefreshTable(); // calling RefreshTable
+			String enumValue = null;
 
-		// getting all the data from country table
-		for (Country country : countryDAO.ListAllCountry()) {
+			// getting all the data from country table
+			for (country country : countryDAO.ListAllCountry()) {
 
-			String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+				String surfaceArea = String.valueOf(country.getSurfaceArea()); // converting float to String
+				Continent c = country.getContinent();
+				String s = String.valueOf(c);
+				
+				if(s=="ASIA") {
+					
+					enumValue ="Asia";
+					
+				}else if(s=="EUROPE") {
+					
+					enumValue ="Europe";
+					
+				}else if(s=="NORTHAMERICA") {
 
-			// getting continent from DB
-			String DBContinents = country.getContinent();
-			// getting continent enum values
-			Continent[] Contin = Continent.values();
-			// this loop for continent
-			for (Continent continents : Contin) {
-				// matching with database continents
-				if (DBContinents.equalsIgnoreCase(continents.getContinent())) {
-					continentExists = true;
+					enumValue ="North America";
+					
+					
+				}else if(s=="AFRICA") {
+
+					enumValue ="Africa";
+					
+					
+				}else if(s=="OCEANIA") {
+
+					enumValue ="Oceania";
+					
+					
+				}else if(s=="ANTARCTICA") {
+
+					enumValue ="Antarctica";
+					
+					
+				}else if(s=="SOUTHAMERICA") {
+
+					enumValue ="South America";
+					
+					
+				}
 
 					// adding to table
-					String[] data = { country.getCode(), country.getName(), continents.getContinent(), surfaceArea,
+					String[] data = { country.getCode(), country.getName(), enumValue, surfaceArea,
 							country.getHeadOfState() };
 
 					((DefaultTableModel) table.getModel()).addRow(data);
-					break; // break
-				}
-
-			}
-
-		}
-		// if continent is not exist will do this
-		if (!continentExists) {
-			JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
-
 		}
 
 	}// end PopulateData
@@ -267,38 +284,51 @@ public class CountryDAOPattern {
 	public void ListAllCountries() {
 
 		RefreshTable(); // calling RefreshTable
-
-		// boolean
-		boolean continentExists = false;
+		String enumValue = null;
 
 		// getting all the data from country table
-		for (Country country : countryDAO.ListAllCountry()) {
+		for (country country : countryDAO.ListAllCountry()) {
+			Continent c = country.getContinent();
+			String s = String.valueOf(c);
+			
+			if(s=="ASIA") {
+				
+				enumValue ="Asia";
+				
+			}else if(s=="EUROPE") {
+				
+				enumValue ="Europe";
+				
+			}else if(s=="NORTHAMERICA") {
 
-			// getting continent from database
-			String DBContinent = country.getContinent();
+				enumValue ="North America";
+				
+				
+			}else if(s=="AFRICA") {
 
-			// getting continent enum values
-			Continent[] Contin = Continent.values();
-			// this loop for continent
-			for (Continent continents : Contin) {
-				// matching with Database continents
-				if (DBContinent.equalsIgnoreCase(continents.getContinent())) {
-					continentExists = true;
+				enumValue ="Africa";
+				
+				
+			}else if(s=="OCEANIA") {
 
-					// adding data to table
-					String[] data = { "", country.getName(), "", "", "" };
-					((DefaultTableModel) table.getModel()).addRow(data);
-					break; // break
-				}
+				enumValue ="Oceania";
+				
+				
+			}else if(s=="ANTARCTICA") {
 
+				enumValue ="Antarctica";
+				
+				
+			}else if(s=="SOUTHAMERICA") {
+
+				enumValue ="South America";
+				
+				
 			}
-
-		}
-
-		// if continent is not exist will do this
-		if (!continentExists) {
-			JOptionPane.showMessageDialog(null, "Continent is not matching with Enum Continent");
-
+			
+					// adding data to table
+					String[] data = { "", country.getName(),"", "", "" };
+					((DefaultTableModel) table.getModel()).addRow(data);
 		}
 
 	}// ListAllCountries

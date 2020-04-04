@@ -10,7 +10,7 @@ public interface CountryDAO {
 
 	// methods to perform the operations
 
-	public List<Country> ListAllCountry();
+	public List<country> ListAllCountry();
 
 	public void addCountry(country newCountry);
 

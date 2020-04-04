@@ -30,8 +30,12 @@ public enum Continent {
 		//checking is it matching with enum 
 		for(Continent c:Continent.values()) {
 			if(cont.equals(c.getContinent())) {
-				return c; //return if its matching
+				//System.out.println(c +"its from enum");
+				Continent co = c.valueOf(c.name());
+				System.out.println(co.getContinent()+"this is enum class");
+				return co; //return if its matching
 			}
+
 		}
 		return null; // if not matching return null
 	}

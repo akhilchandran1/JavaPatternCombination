@@ -17,28 +17,39 @@ import com.sun.jdi.connect.spi.ClosedConnectionException;
 import BuilderDesignPattern.country;
 import DataAccessObjectPattern.CountryDAO;
 import DataAccessObjectPattern.DatabaseConnection;
+import DataTransferObjectPattern.Continent;
 import DataTransferObjectPattern.Country;
 
 public class CountryDAOImpl implements CountryDAO {
 
 	@Override
-	public List<Country> ListAllCountry() {
+	public List<country> ListAllCountry() {
 		// TODO Auto-generated method stub
 
 		// getting the connection
 		Connection conn = DatabaseConnection.MySQLConnection();
 		Statement stmt = null;
 		ResultSet reslt = null;
-		List<Country> countryList = new ArrayList<Country>();
+		String query = "SELECT * FROM country"; // selecting from country table
+		List<country> countryList = new ArrayList<country>();
+
 		try {
 
-			String query = "SELECT * FROM country"; // selecting from country table
 			stmt = conn.createStatement(); // creating the statement
 			reslt = stmt.executeQuery(query);// executing Query
 
 			while (reslt.next()) {
+				Continent c = Continent.continent(reslt.getString("Continent")); 
 
-				Country country = new Country(); // country object
+					// Adding new country
+					country NewCountry = new country.CountryBuilder().setCode(reslt.getString("Code")).setName(reslt.getString("Name"))
+							.setContinent(c).setSurfaceArea(reslt.getFloat("SurfaceArea"))
+							.setHeadOfState(reslt.getString("HeadOfState")).getCountry();
+
+					countryList.add(NewCountry); // countryDAOImpl method
+				
+				/*
+				country country = new country(); // country object
 				country.setCode(reslt.getString("Code"));
 				country.setName(reslt.getString("Name"));
 				country.setContinent(reslt.getString("Continent"));
@@ -47,6 +58,7 @@ public class CountryDAOImpl implements CountryDAO {
 				country.setSurfaceArea(reslt.getFloat("SurfaceArea"));
 				country.setHeadOfState(reslt.getString("HeadOfState"));
 				countryList.add(country); // adding to the list
+				*/
 			}
 
 		} catch (SQLException e) {

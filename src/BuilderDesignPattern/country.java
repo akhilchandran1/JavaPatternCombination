@@ -21,11 +21,11 @@ public class country {
 	private country(CountryBuilder builder) {
 
 		super();
-		this.Code = builder.getCode();
-		this.Name = builder.getName();
-		this.continent = builder.getContinent();
-		this.SurfaceArea = builder.getSurfaceArea();
-		this.HeadOfState = builder.getHeadOfState();
+		this.Code = builder.Code;
+		this.Name = builder.Name;
+		this.continent = builder.continent;
+		this.SurfaceArea = builder.SurfaceArea;
+		this.HeadOfState = builder.HeadOfState;
 
 	}
 	
@@ -38,6 +38,26 @@ public class country {
 	}
 	
 	
+	//getter
+	public String getCode() {
+		return Code;
+	}
+
+	public String getName() {
+		return Name;
+	}
+
+	public Continent getContinent() {
+		return continent;
+	}
+
+	public float getSurfaceArea() {
+		return SurfaceArea;
+	}
+
+	public String getHeadOfState() {
+		return HeadOfState;
+	}
 
 	public static class CountryBuilder {
 
@@ -47,27 +67,6 @@ public class country {
 		private Continent continent;
 		private float SurfaceArea;
 		private String HeadOfState;
-		
-		//getter
-		public String getCode() {
-			return Code;
-		}
-
-		public String getName() {
-			return Name;
-		}
-
-		public Continent getContinent() {
-			return continent;
-		}
-
-		public float getSurfaceArea() {
-			return SurfaceArea;
-		}
-
-		public String getHeadOfState() {
-			return HeadOfState;
-		}
 
 		// adding setters (instead of void mentioning CountryBuilder object)
 		public CountryBuilder setCode(String code) {
