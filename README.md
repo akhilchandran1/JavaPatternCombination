@@ -1,4 +1,4 @@
-Database Connection with Singleton
+Database Connection with Singleton:
 
 I use Singleton to connect Database, because Singleton is only applicable in database connection in this project (is the only one connection that we use in this assignment).  The other reason is its more convenient..
 
@@ -7,7 +7,7 @@ Singleton pattern ensure only one instance of a class is instantiated for the li
 Singleton pattern is not much recommended Design pattern, because its globally accessible and have many drawbacks.  
 
 
-Builder Design Pattern
+Builder Design Pattern:
 
 Builder Design Pattern provides clear separation between construction and representation of an object. It provides better control over construction process and supports to change the internal representation of objects
 
